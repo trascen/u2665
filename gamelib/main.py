@@ -10,17 +10,25 @@ import pygame
 import pygame.display
 import pygame.surface
 import pygame.event
+import pygame.image
+import pygame.transform
 import gamelib.data as data
 
-
+class Spritey():
+    def __init__(self, name):
+        self.surface = pygame.image.load(data.load(name + '.png')).convert()
 
 
 def main():
     ''' entry point of the game '''
 
-    pygame.init()
-    screen = pygame.display.set_mode([800, 600])
 
+    pygame.init()
+    real_screen = pygame.display.set_mode([640*4, 480*4])
+
+    screen = pygame.Surface((640,480)).convert()
+
+    player = Spritey('player')
     square_w = 90
     square_h = 90
 
@@ -45,11 +53,11 @@ def main():
             square_y -= 2
             jumptime += 1
 
-        elif square_y < 600-square_h:
+        elif square_y < 480-square_h:
             square_y +=3
             #square_y = 600-square_h
-            if square_y >= 600-square_h:
-                square_y = 600-square_h
+            if square_y >= 480-square_h:
+                square_y = 480-square_h
                 jumptime = 0
         if pressed[pygame.K_DOWN]: square_y += 3
         if pressed[pygame.K_LEFT]: square_x -= 3
@@ -61,16 +69,16 @@ def main():
 
 
 
-        screen.fill((0, 0, 0))
+        screen.fill((127,127,127))
+        rect = pygame.Rect(square_x, square_y, square_h, square_w)
+        screen.blit(player.surface, [square_x, square_y])
 
-        pygame.draw.rect(screen, color, pygame.Rect(square_x, square_y, square_h, square_w))
+        pygame.transform.scale(screen,(real_screen.get_width(), real_screen.get_height()), real_screen)
 
         pygame.display.flip()
         clock.tick(60)
+        #print(clock.get_fps())
 
-        pygame.display.flip()
 
 
-        print("Hello from your game's main()")
-        print(data.load('sample.txt').read())
 
