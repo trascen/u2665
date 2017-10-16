@@ -1,8 +1,12 @@
 ''' Dependency checks '''
 
 def check_version():
-    import sys 
-    required_version = (3,5)
+    '''
+    Checks if game is being called with Python 3.5 or higher,
+    game needs Python 3.5 or higher.
+    '''
+    import sys
+    required_version = (3, 5)
     if sys.version_info[0:2] < required_version:
         print('This game required Python 3.5 or higher to work.')
         return False
