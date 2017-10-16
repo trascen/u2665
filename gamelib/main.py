@@ -31,15 +31,26 @@ def main():
     color = (255, 255, 255)
 
     clock = pygame.time.Clock()
+    jumptime = 50
 
     keep_running = True
 
+    ground_collision = False # use for jumping when there are more sprites
 
     while keep_running:
 
         pressed = pygame.key.get_pressed()
 
-        if pressed[pygame.K_UP]: square_y -= 3
+        if pressed[pygame.K_UP] and jumptime < 50: 
+            square_y -= 2
+            jumptime += 1
+
+        elif square_y < 600-square_h:
+            square_y +=3
+            #square_y = 600-square_h
+            if square_y >= 600-square_h:
+                square_y = 600-square_h
+                jumptime = 0
         if pressed[pygame.K_DOWN]: square_y += 3
         if pressed[pygame.K_LEFT]: square_x -= 3
         if pressed[pygame.K_RIGHT]: square_x += 3
