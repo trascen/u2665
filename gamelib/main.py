@@ -20,7 +20,7 @@ def main():
     ''' entry point of the game '''
 
     pygame.init()
-    real_screen = pygame.display.set_mode([640*4, 480*4])
+    real_screen = pygame.display.set_mode([640*2, 480*2])
 
     clock = pygame.time.Clock()
 

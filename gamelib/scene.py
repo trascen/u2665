@@ -16,13 +16,15 @@ class Scene:
 
 class MainScene(Scene):
     def __init__(self):
-        self.canvas = pygame.Surface((640,480)).convert()
+        self.bg = Spritey('testlevel')
+        #self.canvas = pygame.Surface((320,240)).convert()
+        self.canvas = pygame.Surface((self.bg.surface.get_width(),self.bg.surface.get_height())).convert()
         self.player = Spritey('player')
-        self.square_w = 90
-        self.square_h = 90
+        self.square_w = self.player.surface.get_width()
+        self.square_h = self.player.surface.get_height()
 
-        self.square_x = 100
-        self.square_y = 100
+        self.square_x = 10
+        self.square_y = 10
 
         self.color = (0, 0, 0)
         self.color = (255, 255, 255)
@@ -36,11 +38,11 @@ class MainScene(Scene):
             self.square_y -= 2
             self.jumptime += 1
 
-        elif self.square_y < 480-self.square_h:
+        elif self.square_y < self.canvas.get_height()-self.square_h:
             self.square_y +=3
             #square_y = 600-square_h
-            if self.square_y >= 480-self.square_h:
-                self.square_y = 480-self.square_h
+            if self.square_y >= self.canvas.get_height()-self.square_h:
+                self.square_y = self.canvas.get_height()-self.square_h
                 self.jumptime = 0
         if pressed[pygame.K_DOWN]: self.square_y += 3
         if pressed[pygame.K_LEFT]: self.square_x -= 3
@@ -49,7 +51,8 @@ class MainScene(Scene):
         return self
     
     def draw(self, screen):
-        self.canvas.fill((127,127,127))
+        #self.canvas.fill((127,127,127))
+        self.canvas.blit(self.bg.surface, [0,0])
         rect = pygame.Rect(self.square_x, self.square_y, self.square_h, self.square_w)
         self.canvas.blit(self.player.surface, [self.square_x, self.square_y])
         pygame.transform.scale(self.canvas,(screen.get_width(), screen.get_height()), screen)
